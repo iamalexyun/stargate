@@ -12,28 +12,35 @@ async function bridgeToken(
   slippage,
   pkey
 ) {
-  const detectedSrcChain = chainIds.find(
-    (chain) => chain.chainId === srcChainId
-  );
-  const rpcUrl = providers[detectedSrcChain.network];
-  console.log(rpcUrl);
-  const RPC_PROVIDER = new ethers.JsonRpcProvider(rpcUrl);
-
+  //signer from pk
   const signer = new ethers.Wallet(pkey, RPC_PROVIDER);
   const { address } = signer;
   console.log(chalk.magenta(address));
+
+  //detected source chain
+  const detectedSrcChain = chainIds.find(
+    (chain) => chain.chainId === srcChainId
+  );
+  console.log("SOURCE CHAIN:", chalk.green(detectedSrcChain.network));
+
+  //detected destination chain
+  const detectedDstChain = chainIds.find(
+    (chain) => chain.chainId === dstChainId
+  );
+  console.log("DESTINATION CHAIN:", chalk.green(detectedDstChain.network));
+
+  //retrieving rpc url for src chain
+  const rpcUrl = providers[detectedSrcChain.network];
+
+  //provider instance
+  const RPC_PROVIDER = new ethers.JsonRpcProvider(rpcUrl);
+
+  console.log("SOURCE TOKEN:", chalk.green(tokenIn));
+  console.log("AMOUNT:", chalk.green(qty, tokenIn));
+  console.log("SLIPPAGE:", chalk.green(slippage + "%"));
+  console.log("DESTINATION TOKEN:", chalk.green(tokenOut));
   //proceed for native token
   if (tokenIn === "ETH") {
-    //detected source chain
-
-    //detected destination chain
-    const detectedDstChain = chainIds.find(
-      (chain) => chain.chainId === dstChainId
-    );
-    console.log("SOURCE CHAIN:", chalk.green(detectedSrcChain.network));
-    console.log("SOURCE TOKEN:", chalk.green(tokenIn));
-    console.log("AMOUNT:", chalk.green(qty, tokenIn));
-    console.log("SLIPPAGE:", chalk.green(slippage + "%"));
     const amountInWei = ethers.parseEther(qty);
     const amountOutMin =
       amountInWei - (amountInWei * BigInt(slippage)) / BigInt("100");
@@ -41,14 +48,11 @@ async function bridgeToken(
       "AMOUNT OUT MIN:",
       chalk.green(ethers.formatEther(amountOutMin), tokenOut)
     );
-    console.log("DESTINATION CHAIN:", chalk.green(detectedDstChain.network));
-    console.log("DESTINATION TOKEN:", chalk.green(tokenOut));
 
     //router address for detected netowrk
     const routerETHAddress = routerAddresses[detectedSrcChain.network].native;
     const routerAddress = routerAddresses[detectedSrcChain.network].tokens;
     console.log(routerETHAddress);
-    //rpc url
 
     const routerETHContract = new ethers.Contract(
       routerETHAddress,
