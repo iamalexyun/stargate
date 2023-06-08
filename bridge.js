@@ -12,11 +12,6 @@ async function bridgeToken(
   slippage,
   pkey
 ) {
-  //signer from pk
-  const signer = new ethers.Wallet(pkey, RPC_PROVIDER);
-  const { address } = signer;
-  console.log(chalk.magenta(address));
-
   //detected source chain
   const detectedSrcChain = chainIds.find(
     (chain) => chain.chainId === srcChainId
@@ -34,6 +29,10 @@ async function bridgeToken(
 
   //provider instance
   const RPC_PROVIDER = new ethers.JsonRpcProvider(rpcUrl);
+  //signer from pk
+  const signer = new ethers.Wallet(pkey, RPC_PROVIDER);
+  const { address } = signer;
+  console.log(chalk.magenta(address));
 
   console.log("SOURCE TOKEN:", chalk.green(tokenIn));
   console.log("AMOUNT:", chalk.green(qty, tokenIn));
@@ -52,7 +51,6 @@ async function bridgeToken(
     //router address for detected netowrk
     const routerETHAddress = routerAddresses[detectedSrcChain.network].native;
     const routerAddress = routerAddresses[detectedSrcChain.network].tokens;
-    console.log(routerETHAddress);
 
     const routerETHContract = new ethers.Contract(
       routerETHAddress,
