@@ -140,15 +140,21 @@ const routerAddresses = {
     native: "0xB49c4e680174E331CB0A7fF3Ab58afC9738d5F8b",
     tokens: "0xB0D502E938ed5f4df2E681fE6E419ff29631d62b",
   },
-  // bsc: {
-  //   tokens: "0x4a364f8c717cAAD9A442737Eb7b8A55cc6cf18D8",
-  // },
-  // avalanche: {
-  //   tokens: "0x45A01E4e04F14f7A4a6702c74187c5F6222033cd",
-  // },
-  // polygon: {
-  //   tokens: "0x45A01E4e04F14f7A4a6702c74187c5F6222033cd",
-  // },
+  bsc: {
+    tokens: "0x4a364f8c717cAAD9A442737Eb7b8A55cc6cf18D8",
+  },
+  avalanche: {
+    tokens: "0x45A01E4e04F14f7A4a6702c74187c5F6222033cd",
+  },
+  polygon: {
+    tokens: "0x45A01E4e04F14f7A4a6702c74187c5F6222033cd",
+  },
+  fantom: {
+    tokens: "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
+  },
+  metis: {
+    tokens: "0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590",
+  },
 };
 
 const providers = {
@@ -156,7 +162,10 @@ const providers = {
   arbitrum: "https://endpoints.omniatech.io/v1/arbitrum/one/public",
   optimism: "https://optimism.publicnode.com",
   polygon: "https://polygon.llamarpc.com",
-  ////////////////////////////////
+  avalanche: "https://avalanche-c-chain.publicnode.com",
+  bsc: "https://rpc.ankr.com/bsc",
+  fantom: "https://fantom.publicnode.com",
+  metis: "https://andromeda.metis.io/?owner=1088",
 };
 
 export { ERC20_ADDRESSES, chainIds, routerAddresses, providers, poolIds };

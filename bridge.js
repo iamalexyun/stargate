@@ -1,4 +1,4 @@
-import { Wallet, ethers } from "ethers";
+import { ethers } from "ethers";
 import { routerETHABI } from "./abi/routerETHABI.js";
 import { routerABI } from "./abi/routerABI.js";
 import {
@@ -95,12 +95,12 @@ async function bridgeToken(
         detectedSrcChain.network
       )} to ${chalk.green(detectedDstChain.network)}`
     );
-    // const swapETH = await routerETHContract.connect(signer).swapETH(...params, {
-    //   value: amountInWei + LZFee,
-    //   gasPrice: gasPrice,
-    //   gasLimit: estimatedGas,
-    // });
-    // console.log(swapETH.hash);
+    const swapETH = await routerETHContract.connect(signer).swapETH(...params, {
+      value: amountInWei + LZFee,
+      gasPrice: gasPrice,
+      gasLimit: estimatedGas,
+    });
+    console.log(swapETH.hash);
   } else {
     const srcPoolId = poolIds[detectedSrcChain.network].find(
       (item) => item.token === tokenIn
@@ -202,4 +202,4 @@ async function bridgeToken(
  * pkey: string
  */
 
-bridgeToken(111, "USDC", 110, "USDT", "0.5", "1", "");
+bridgeToken(111, "USDC", 106, "USDT", "0.05", "1", "");
